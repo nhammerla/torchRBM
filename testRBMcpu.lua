@@ -6,8 +6,7 @@ local Rbm = require 'rbm'
 -- use 4 threads
 torch.setnumthreads(4)
 
--- Use floats throughout.
--- We could use torch.CudaTensor here and have it all run on the GPU
+-- Use floats throughout
 torch.setdefaulttensortype('torch.FloatTensor')
 
 -- load mnist training set
@@ -24,17 +23,17 @@ rbm = Rbm.new{n_visible=1024, n_hidden=64, CDsteps=1, momentum={0.5, 0.9},
               learningRate=0.01}
 
 -- train for 30 epochs
---
-rbm:train(data, 10)
+rbm:train(data, 30)
 
 -- construct autoencoder
--- we could further fine-tune this network using regular backprop
 mlp = nn.Sequential()
 mlp:add(rbm.encoder)
 mlp:add(rbm.decoder)
 
--- reconstruct output using initialised autoencoder
-v = mlp:forward(data[{{1,36}, {}}])
+-- we could further fine-tune this network using regular backprop
+
+-- predict reconstruct output
+v = mlp:forward(data[{{1,36}, {}}]:cuda())
 
 -- rehspae for visualisation
 D = data[{{1,36},{}}]:view(torch.LongStorage{36,32,32})
