@@ -35,8 +35,8 @@ function Rbm.new(arg)
     self.n_hidden = arg.n_hidden
 
     -- unit type, default: sigmoids
-    self.v_activation = 'binary' or nn.Sigmoid()
-    self.h_activation = 'binary' or nn.Sigmoid()
+    self.v_activation = arg.v_activation or 'binary'
+    self.h_activation = arg.v_activation or 'binary'
     self.useStates = arg.useStates or true
 
     -- learning
