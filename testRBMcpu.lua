@@ -33,7 +33,7 @@ mlp:add(rbm.decoder)
 -- we could further fine-tune this network using regular backprop
 
 -- predict reconstruct output
-v = mlp:forward(data[{{1,36}, {}}]:cuda())
+v = mlp:forward(data[{{1,36}, {}}])
 
 -- rehspae for visualisation
 D = data[{{1,36},{}}]:view(torch.LongStorage{36,32,32})
